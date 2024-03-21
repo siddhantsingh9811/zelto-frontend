@@ -1,0 +1,163 @@
+.home{
+    padding-right: 4vw;
+    padding-left: 4vw;
+    padding-bottom: 20px;
+}
+.location .cur .l{
+    height: 25px;
+}
+.location .cur .a{
+    width: 15px;
+}
+.location .cur{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.location h4{
+
+font-style: normal;
+font-weight: 400;
+font-size: 1em;
+
+
+/* nav-gray */
+color: var(--secondary);
+
+
+}
+.location  h1{
+
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+font-size: 1.5em;
+margin-right: 5px;
+margin-left: 5px;
+}
+
+.search{
+    margin-top: 2vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d7d7d7;
+    padding: 12px;
+    border-radius: 50px;
+}
+.search .sub{
+    display: flex;
+    align-items: center;
+    width: max-content;
+}
+.search input{
+    color: #7D7F88;
+    font-style: normal;
+    font-weight: 400;
+    color: #7D7F88;
+    background-color: transparent;
+    font-size: 1em;
+    width: 70vw;
+    margin-left: 10px;
+}
+.search .s{
+    height: 25px;
+}
+.search .f{
+    height: 25px;
+}
+
+.home h2{
+    margin-top: 2vh;
+    font-weight: 500;
+    font-size: 1.4em;
+
+}
+.buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 2vh;
+}
+.button{
+
+    border: 1px solid var(--purple);
+    border-radius: 40px;
+    padding: 5px 10px 5px 10px;
+    margin-right: 1em;
+    font-size: 1.3em;
+    font-weight: 500;
+    color: var(--purple);
+}
+.buttons .active{
+    background-color: var(--purple);
+    color: white;
+}
+
+.vendor {
+    margin-top: 2vh;
+    height: fit-content;
+    width: 100%;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+
+}
+.vendor .img {
+    width: 100%;
+    height: 200px;
+    background-image: url("https://bd.gaadicdn.com/processedimages/tvs/tvs-scooty-zest/494X300/tvs-scooty-zest6476deb7d6ae9.jpg");
+    background-position: center;
+    background-size: cover;
+}
+.vendor .info{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    font-weight: 500;
+    padding:10px;
+}
+.left{
+    display: flex;
+    align-items: baseline;
+    width: 60%;
+    flex-wrap: wrap;
+}
+.right{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.rating {
+    line-height: 15px;
+    font-size: 11px;
+    background-color: #35b96a;
+    border-radius: 0.25rem;
+    color: #ffffff;
+    width: fit-content;
+    padding: 2px 5px 2px 5px;
+}
+.text-4 {
+
+    font-size: 0.8em;
+    color: #8a8a8a;
+}
+.text-5 {
+    font-size: 0.9em;
+    color: #8a8a8a;
+    margin-left: 5px;
+}
+.text-6 {
+    font-size: 0.9em;
+    color: #000000;
+}
+
+.heading{
+    position: sticky;
+    top: -2vh;
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

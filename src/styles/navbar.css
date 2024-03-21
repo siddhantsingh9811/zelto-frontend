@@ -1,0 +1,39 @@
+.navbar ul{
+    display: flex;
+    list-style-type: none;
+    width: 100vw;
+    justify-content: space-around;
+    height: fit-content;
+    background-color: white;
+    transform: translateY(10px);
+
+}
+.navbar #foo a{
+    height: fit-content;
+}
+.navbar li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    flex: 1 1 0px;
+    align-items: center;
+
+}
+.navbar li svg{
+    height: 4vh;
+    width: 4vh;
+    stroke:var(--secondary);
+}
+.navbar li .text{
+    color: var(--secondary);
+}
+.navbar .active .text{
+    color: var(--purple)!important;
+}
+.navbar .active svg{
+    stroke:var(--purple)!important;
+    
+}   

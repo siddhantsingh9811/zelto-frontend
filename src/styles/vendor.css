@@ -1,0 +1,67 @@
+.details .name {
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    align-items: center;
+    margin-left: 2vw;
+}
+
+.details .name h2{
+    font-weight: 400;
+    font-size: 1.4em;
+    margin-right: 2vw;;
+}
+
+.details .name p{
+    color: var(--secondary);
+    margin-right: 2vw;
+}
+.selector{
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+}
+.top{
+    display: flex;
+    width: 80%;
+    justify-content: space-around;
+}
+.top .b svg{
+    stroke: var(--purple);
+    width: 35px;
+    padding:10px;
+    z-index: 100;
+}
+.top .active svg{
+    stroke: white;
+    background-color: var(--purple);
+    border-radius: 35px;
+    
+}
+.container{
+    background-color: var(--purple);
+    height: 100vh;
+    transform: translateY(-7px);
+}
+
+.top .active::before{
+    content: '';
+    
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    transform: translate(-35px, 50%);
+    box-shadow:18px 14px 0 var(--purple);
+    z-index: 1;
+}
+.top .active::after{
+    content: '';
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    transform: translate(0px, 50%);
+    box-shadow: -18px 14px 0 var(--purple);
+    z-index: 1;
+}
