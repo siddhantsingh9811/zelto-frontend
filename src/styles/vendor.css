@@ -40,7 +40,7 @@
 }
 .container{
     background-color: var(--purple);
-    height: 100vh;
+    height: 75vh;
     transform: translateY(-7px);
 }
 
@@ -64,4 +64,9 @@
     transform: translate(0px, 50%);
     box-shadow: -18px 14px 0 var(--purple);
     z-index: 1;
+}
+
+.vehicles{
+    background-color: var(--purple);
+    width: 100vw;
 }

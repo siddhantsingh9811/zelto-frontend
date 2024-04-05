@@ -72,7 +72,9 @@ return (
             </div>
         </div>
         <div className="container">
-            asdadgad
+            <div className="vehicles">
+                
+            </div>
         </div>
     </div>
     );

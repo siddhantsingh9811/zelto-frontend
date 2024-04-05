@@ -1,7 +1,7 @@
 const Profile = () => {
     return ( 
         <div className="profile">
-            Profile
+            <img src="profile.png" alt="" />
         </div>
      );
 }
