@@ -3,7 +3,8 @@ import History from "./pages/History";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Vendor from "./pages/VendorDetails";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import Login from "./pages/Login";
 
 const Main = () => {
     return ( 
@@ -14,6 +15,7 @@ const Main = () => {
                 <Route path="/profile" element={<Profile/>} />
                 <Route path="/cart" element={<Cart/>} />
                 <Route path="/vendor/:id" element={<Vendor/>} />
+                <Route path="/login" element={<Login/>} />
             </Routes>
         </div>
      );
