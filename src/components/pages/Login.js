@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 
 function Login() {
+
+
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+
+
   return (
+  
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         
@@ -21,11 +28,13 @@ function Login() {
               <img src="frame.png" alt="key" className="h-5 w-5 mr-2 mt-2" />
                 <input
                   id="email"
+                  value={email}
                   name="email"
                   type="email"
                   autoComplete="email"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -45,11 +54,13 @@ function Login() {
               <img src="key.png" alt="key" className="h-5 w-5 mr-2 mt-2" />
                 <input
                   id="password"
+                  value={password}
                   name="password"
                   type="password"
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>

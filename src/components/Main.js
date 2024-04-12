@@ -5,6 +5,7 @@ import Profile from "./pages/Profile";
 import Vendor from "./pages/VendorDetails";
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 const Main = () => {
     return ( 
@@ -16,6 +17,7 @@ const Main = () => {
                 <Route path="/cart" element={<Cart/>} />
                 <Route path="/vendor/:id" element={<Vendor/>} />
                 <Route path="/login" element={<Login/>} />
+                <Route path="/signup" element={<SignUp/>} />
             </Routes>
         </div>
      );
