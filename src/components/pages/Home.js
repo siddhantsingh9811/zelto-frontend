@@ -1,18 +1,52 @@
 import '../../styles/home.css' 
-import Vendor from '../common/vendors';
-import { BrowserRouter,Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const Home = () => {
     const removeActive = ()=>{
         let ul = document.getElementById("foo");
         let items = ul.getElementsByTagName("div");
-        // items.forEach((element)=>{
-        //     element.
-        // });
-        for (var i = 0; i < items.length; ++i) {
-            items[i].classList.remove('active');
-        }          
+        for (const element of items) {
+            element.classList.remove('active');
+        }       
+        
     }
+    const [vendors, setVendors] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/api/getvendors')
+            .then(response => {
+                setVendors(response.data); 
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching vendors:', error);
+            });
+    }, []);
+
+
+    const VendorCard = ({ vendor }) => {
+        return (
+            <Link to={`/vendor/${vendor.vendorID}`} style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                <div className="vendor"> 
+                    <div className="img"/>
+                    <div className="info">
+                        <div className="left">
+                            <h3>{vendor.name}</h3>
+                            <p className="text-5">{vendor.distance}200m away</p>
+                            {/* <p className="text-4">{vendor.vehicleTypes.join(' • ')}</p> */}
+                        </div>
+                        <div className="right">
+                            <div className="rating">4.3</div>
+                            <p className="text-6">9-5 pm </p>
+                        </div>
+                    </div>
+                </div>
+            </Link>
+        );
+    };
+
     const handleClick = (event)=>{
         removeActive();
         event.currentTarget.classList.toggle('active');
@@ -28,8 +62,8 @@ const Home = () => {
                         <path d="M17.1833 7.04168C16.3083 3.19168 12.95 1.45834 9.99996 1.45834C9.99996 1.45834 9.99996 1.45834 9.99162 1.45834C7.04996 1.45834 3.68329 3.18334 2.80829 7.03334C1.83329 11.3333 4.46662 14.975 6.84996 17.2667C7.73329 18.1167 8.86662 18.5417 9.99996 18.5417C11.1333 18.5417 12.2666 18.1167 13.1416 17.2667C15.525 14.975 18.1583 11.3417 17.1833 7.04168ZM9.99996 11.2167C8.54996 11.2167 7.37496 10.0417 7.37496 8.59168C7.37496 7.14168 8.54996 5.96668 9.99996 5.96668C11.45 5.96668 12.625 7.14168 12.625 8.59168C12.625 10.0417 11.45 11.2167 9.99996 11.2167Z" fill="#826ce9"/>
                     </svg>
                     <h1>Bidholi, Uttarakhand</h1>
-                    <svg className="a" preserveAspectRatio="true"eA viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M13 1L7 7.46154L1 1" stroke="black" stroke-linecap="square"/>
+                    <svg className="a" preserveAspectRatio="true" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 1L7 7.46154L1 1" stroke="black" strokeLinecap="square"/>
                     </svg>
                 </div>
                 <div className="search">
@@ -51,27 +85,16 @@ const Home = () => {
             </div>
             <h2>What do you need?</h2>
             <div className="buttons" id='foo'>
-                <div className="button active" onClick={handleClick}>Scooty</div>
-                <div className="button" onClick={handleClick}>Bike</div>
-                <div className="button" onClick={handleClick}>Car</div>
+                <div className="button active" role="button" onClick={handleClick}>Scooty</div>
+                <div className="button" role="button" onClick={handleClick}>Bike</div>
+                <div className="button" role="button" onClick={handleClick}>Car</div>
             </div>
             <h2 className='heading'>Near your location</h2>
-            <Link to="/vendor/1" style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                <Vendor ></Vendor>
-            </Link>
-            <Link to="/vendor/2" style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                <Vendor ></Vendor>
-            </Link>
-            <Link to="/vendor/3" style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                <Vendor ></Vendor>
-            </Link>
-            <Link to="/vendor/4" style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                <Vendor ></Vendor>
-            </Link>
-            <Link to="/vendor/5" style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                <Vendor ></Vendor>
-            </Link>
-
+            <div className="vendor-list">
+                {vendors.map((vendor, index) => (
+                    <VendorCard key={index} vendor={vendor} />
+                ))}
+            </div>
         </div>
 
      );
