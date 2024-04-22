@@ -76,9 +76,9 @@ const [password, setPassword] = useState("");
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Already a member?{' '}
-            <a href=" " className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-              Sign In
+            Not a member?{' '}
+            <a href="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+              Sign Up
             </a>
           </p>
         </div>
