@@ -1,8 +1,30 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { useParams } from "react-router-dom";
 import "../../styles/vendor.css";
 import Vehicles from "../common/vehicles";
+
 const VendorDetails = () => {
   const { id } = useParams();
+  const [vehicles, setVehicles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchVendorVehicles = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/vendor/${id}/vehicles`);
+        setVehicles(response.data);
+        console.log(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching vendor vehicles:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchVendorVehicles();
+  }, [id]);
+
   const removeActive = () => {
     let ul = document.getElementById("foo");
     let items = ul.getElementsByTagName("div");
@@ -10,17 +32,15 @@ const VendorDetails = () => {
       element.classList.remove("active");
     }
   };
+
   const handleClick = (event) => {
     removeActive();
     event.currentTarget.classList.toggle("active");
   };
 
-  const vehicles = [
-     {"quantity":4,"vehicle_name":"Activa 5G", "daily_price":5000,"hourly_price":400},
-     {"quantity":4,"vehicle_name":"Activa 5G", "daily_price":5000,"hourly_price":400},
-     {"quantity":4,"vehicle_name":"Activa 5G", "daily_price":5000,"hourly_price":400},
-     {"quantity":4,"vehicle_name":"Activa 5G", "daily_price":5000,"hourly_price":400},
-  ]
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="details">
       <div className="name">
@@ -83,7 +103,8 @@ const VendorDetails = () => {
               viewBox="0 0 48 48"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-            >
+            >+
+            
               <path
                 d="M8.4 36.146C8.4 36.146 8.206 37.656 8.4 38.374C8.535 38.872 8.664 39.711 9.18 39.711H12.077C12.593 39.711 12.722 38.872 12.857 38.374C13.051 37.657 12.857 36.146 12.857 36.146"
                 stroke-linecap="round"
@@ -146,7 +167,7 @@ const VendorDetails = () => {
         </div>
       </div>
       <div className="container">
-        <Vehicles vehicles={vehicles}/>
+        <Vehicles vehicles={vehicles} />
       </div>
     </div>
   );
