@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import "../../styles/vendor.css";
+import Vehicles from "../common/vehicles";
 const VendorDetails = () => {
   const { id } = useParams();
   const removeActive = () => {
@@ -13,6 +14,13 @@ const VendorDetails = () => {
     removeActive();
     event.currentTarget.classList.toggle("active");
   };
+
+  const vehicles = [
+     {"quantity":4,"vehicle_name":"Activa 5G", "daily_price":5000,"hourly_price":400},
+     {"quantity":4,"vehicle_name":"Activa 5G", "daily_price":5000,"hourly_price":400},
+     {"quantity":4,"vehicle_name":"Activa 5G", "daily_price":5000,"hourly_price":400},
+     {"quantity":4,"vehicle_name":"Activa 5G", "daily_price":5000,"hourly_price":400},
+  ]
   return (
     <div className="details">
       <div className="name">
@@ -138,7 +146,7 @@ const VendorDetails = () => {
         </div>
       </div>
       <div className="container">
-        <div className="vehicles"></div>
+        <Vehicles vehicles={vehicles}/>
       </div>
     </div>
   );

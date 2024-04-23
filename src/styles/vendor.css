@@ -1,3 +1,6 @@
+.details{
+    all:unset;
+}
 .details .name {
     display: flex;
     flex-direction: row;
@@ -53,7 +56,8 @@
     border-radius: 50%;
     transform: translate(-35px, 50%);
     box-shadow:18px 14px 0 var(--purple);
-    z-index: 1;
+    z-index: -6;
+
 }
 .top .active::after{
     content: '';
@@ -63,7 +67,8 @@
     border-radius: 50%;
     transform: translate(0px, 50%);
     box-shadow: -18px 14px 0 var(--purple);
-    z-index: 1;
+    z-index: -6;
+
 }
 
 .vehicles{

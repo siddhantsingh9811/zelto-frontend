@@ -1,40 +1,51 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const SearchPage = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+    const [vendors, setVendors] = useState([]);
+    const [filteredVendors, setFilteredVendors] = useState([]);
 
-    const handleSearch = async () => {
-        try {
-            const response = await axios.get(`http://localhost:5000/api/search?query=${searchQuery}`);
-            setSearchResults(response.data);
-        } catch (error) {
-            console.error('Error searching for scooters:', error);
-        }
+    useEffect(() => {
+        axios.get('http://localhost:5000/api/getvendors')
+            .then(response => {
+                setVendors(response.data); 
+            })
+            .catch(error => {
+                console.error('Error fetching vendors:', error);
+            });
+    }, []);
+
+    useEffect(() => {
+        const filtered = vendors.filter(vendor => {
+            // Filter logic based on vendor name or any other criteria
+            return vendor.name.toLowerCase().includes(searchQuery.toLowerCase());
+        });
+        setFilteredVendors(filtered);
+    }, [searchQuery, vendors]);
+
+    const handleInputChange = (e) => {
+        setSearchQuery(e.target.value);
     };
 
-    return (
+    return ( 
         <div className="search-page">
-            <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search for scooters..."
+            <h2>Search for Scooties</h2>
+            <input 
+                type="text" 
+                value={searchQuery} 
+                onChange={handleInputChange} 
+                placeholder="Search for scooties..."
             />
-            <button onClick={handleSearch}>Search</button>
-
-            <div className="search-results">
-                {searchResults.map((scooter, index) => (
-                    <div key={index}>
-                        <h3>{scooter.brand} {scooter.model}</h3>
-                        <p>Price: {scooter.price}</p>
-                        <p>Location: {scooter.location}</p>
+            <div className="vendor-list">
+                {filteredVendors.map((vendor, index) => (
+                    <div key={index} className="vendor">
+                        {/* Display vendor details */}
                     </div>
                 ))}
             </div>
         </div>
-    );
-};
-
+     );
+}
+ 
 export default SearchPage;

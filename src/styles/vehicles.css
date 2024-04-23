@@ -1,0 +1,81 @@
+.vehicles{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.vehicle{
+    background-color: white;
+    border-radius: 15px;;
+    width: 90vw;
+    position: relative;
+    margin-bottom: 20px;
+    overflow: hidden;
+    z-index: 2;
+    font-size: 1.1em;
+}
+.vehicle .img{
+    background: url("https://bd.gaadicdn.com/processedimages/tvs/tvs-scooty-zest/494X300/tvs-scooty-zest6476deb7d6ae9.jpg");
+    height: 20vh;
+    background-position: center;
+    background-size: cover;
+}
+.vehicle .text{
+    padding-top: 10px;
+}
+.vehicle .bottom{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--purple);
+    font-size: 1em;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: 600;
+}
+.vehicle .units span{
+    color: #8A8A8A;
+}
+.vehicle .top{
+    width: 100%;
+}
+
+.btn-group {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--purple);
+    transition: border 0.3s ease;
+    line-height: 15px;
+    height: fit-content;
+}
+  
+.vehicle button {
+    width: 20px;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--purple);
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+
+  }
+  
+.vehicle .right p {
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #F5F8FB;
+    border-right: 1px solid #F5F8FB;
+}
+.vehicle .right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
