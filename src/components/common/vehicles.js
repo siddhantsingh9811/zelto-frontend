@@ -16,11 +16,14 @@ const IncrementDecrementBtn = ({ quantity, onIncrement, onDecrement }) => {
 };
 
 const Vehicle = ({ vehicle, onQuantityChange }) => {
-  const [quantity, setQuantity] = useState(vehicle.quantity);
+  const [quantity, setQuantity] = useState(0);
 
   const handleIncrementCounter = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-    onQuantityChange(vehicle._id, quantity + 1);
+    if(quantity<vehicle.quantity){
+      setQuantity((prevQuantity) => prevQuantity + 1);
+      onQuantityChange(vehicle._id, quantity + 1);
+
+    }
   };
 
   const handleDecrementCounter = () => {
@@ -38,7 +41,7 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
           <div className="left">
             <h2>{vehicle.subVehicleCompany}</h2>
             <p className="units">
-              Units: <span>{quantity}</span>
+              Units: <span>{vehicle.quantity}</span>
             </p>
             <p className="price">
               Price: {vehicle.pricePerHour}/Hour • {vehicle.basePrice}/Hour
