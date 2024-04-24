@@ -1,0 +1,67 @@
+.cart-item {
+    background-color: white;
+    border-radius: 15px;
+    width: 90vw;
+    position: relative;
+    margin-bottom: 20px;
+    overflow: hidden;
+    z-index: 2;
+    font-size: 1.1em;
+    display: flex;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+}
+
+.cart-item img {
+    height: 20vh;
+    background-position: center;
+    background-size: cover;
+}
+
+.item-details {
+    padding: 10px;
+    flex: 1;
+}
+
+.item-details h3 {
+    color: var(--purple); /* Assuming you have a variable for purple color */
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.item-details p {
+    color: #8A8A8A;
+    margin-bottom: 5px;
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.proceed-to-checkout {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: var(--purple);  /* Adjust the background color */
+    color: #fff; /* Adjust the text color */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .proceed-to-checkout:hover {
+    background-color: var(--purple);  /* Adjust the hover background color */
+  }
+  
+  .cart-heading {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333; /* Adjust the color as needed */
+  }
