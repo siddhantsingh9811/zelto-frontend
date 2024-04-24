@@ -39,7 +39,7 @@ const Cart = () => {
 
   return (
     <div className="cart-container">
-      <h2>Shopping Cart</h2>
+      <h2 className="cart-heading">Shopping Cart</h2>
       <div className="cart-items">
         {cartItems.map((item) => (
           <div className="cart-item" key={item._id}>
@@ -54,7 +54,7 @@ const Cart = () => {
           </div>
         ))}
       </div>
-      {/* Add checkout button or other cart functionality */}
+      <button className="proceed-to-checkout">Proceed to Checkout</button>
     </div>
   );
 };
