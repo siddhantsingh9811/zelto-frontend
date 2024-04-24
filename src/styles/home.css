@@ -47,8 +47,8 @@ margin-left: 5px;
 }
 .search .sub{
     display: flex;
-    align-items: center;
-    width: max-content;
+    /*align-items: center;
+    width: max-content;*/
 }
 .search input{
     color: #7D7F88;
