@@ -9,24 +9,18 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Make POST request using Axios
     try {
       await axios.post("http://localhost:5000/api/register", {
         username,
         email,
-        password
+        password,
       });
-
-      // Show success message
       setShowSuccessMessage(true);
 
-      // Reset form fields
       setUsername("");
       setEmail("");
       setPassword("");
     } catch (error) {
-      // Handle error
       console.error("Error:", error);
     }
   };
@@ -39,7 +33,7 @@ function SignUp() {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form className="space-y-6" onSubmit={handleSubmit}>  
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label
               htmlFor="username"
@@ -118,15 +112,26 @@ function SignUp() {
 
         {showSuccessMessage && (
           <div className="mt-4 mx-auto w-full max-w-sm">
-            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md relative" role="alert">
+            <div
+              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md relative"
+              role="alert"
+            >
               <span className="block sm:inline">uccessfully registered!</span>
               <button
                 onClick={() => setShowSuccessMessage(false)}
                 className="absolute top-0 bottom-0 right-0 px-4 py-3"
               >
-                <svg className="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <svg
+                  className="fill-current h-6 w-6 text-green-500"
+                  role="button"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
                   <title>Close</title>
-                  <path fillRule="evenodd" d="M14.354 5.646a.5.5 0 0 0-.708 0L10 9.293 5.354 5.646a.5.5 0 1 0-.708.708L9.293 10l-4.647 4.646a.5.5 0 1 0 .708.708L10 10.707l4.646 4.647a.5.5 0 0 0 .708-.708L10.707 10l4.647-4.646a.5.5 0 0 0 0-.708z"/>
+                  <path
+                    fillRule="evenodd"
+                    d="M14.354 5.646a.5.5 0 0 0-.708 0L10 9.293 5.354 5.646a.5.5 0 1 0-.708.708L9.293 10l-4.647 4.646a.5.5 0 1 0 .708.708L10 10.707l4.646 4.647a.5.5 0 0 0 .708-.708L10.707 10l4.647-4.646a.5.5 0 0 0 0-.708z"
+                  />
                 </svg>
               </button>
             </div>
