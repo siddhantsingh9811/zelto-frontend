@@ -32,7 +32,7 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
       onQuantityChange(vehicle._id, quantity - 1);
     }
   };
-
+  
   return (
     <div className="vehicle">
       <div className="img"></div>
@@ -46,6 +46,10 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
             <p className="price">
               Price: {vehicle.pricePerHour}/Hour • {vehicle.basePrice}/Hour
             </p>
+            <div className="pickers">
+              <input aria-label="Date" type="date" />
+              <input aria-label="Time" type="time" />
+            </div>
           </div>
           <div className="right">
             <IncrementDecrementBtn
