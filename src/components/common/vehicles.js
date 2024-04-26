@@ -37,8 +37,10 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
   };
 
   const handleDateChange = (event) => {
+    console.log(selectedDate);
     setSelectedDate(event.target.value);
   };
+  
 
   const handleTimeChange = (event) => {
     setSelectedTime(event.target.value);
@@ -108,16 +110,18 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
           <div className="left">
             <h2>{vehicle.subVehicleCompany}</h2>
             <p className="units">
-              Units: <span>{vehicle.quantity}</span>
+              Available Units: <span>{vehicle.quantity}</span>
             </p>
+            <br></br>
             <p className="price">
               Price: {vehicle.pricePerHour}/Hour • {vehicle.basePrice}/Hour
             </p>
+            <br></br>
             <div className="pickers">
               <input
                 aria-label="Date"
                 type="date"
-                value={selectedDate}
+                value={selectedDate} // Bind value to selectedDate state
                 onChange={handleDateChange}
               />
               <input
@@ -127,6 +131,7 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
                 onChange={handleTimeChange}
               />
             </div>
+            <br></br>
           </div>
           <div className="right">
             <IncrementDecrementBtn

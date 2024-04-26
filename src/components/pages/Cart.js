@@ -4,57 +4,16 @@ import '../../styles/cart.css'; // Import cart-specific styles
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([
-    {
-      "_id": "661ec1be0826b7be8a9e5602",
-      "vendorID": 844872,
-      "vehicleType": "scooty",
-      "subVehicleCompany": "Activa 5G",
-      "quantity": 43,
-      "basePrice": 200,
-      "pricePerHour": 100,
-      "vehicleID": 716966,
-      "createdAt": "2024-04-16T18:21:50.811Z",
-      "updatedAt": "2024-04-25T12:04:45.206Z",
-      "__v": 0,
-      "quantity":1
-  },
-  {
-      "_id": "661ec2c82042258b5af4d050",
-      "vendorID": 844872,
-      "vehicleType": "scooty",
-      "subVehicleCompany": "Maestro",
-      "quantity": 476,
-      "basePrice": 200,
-      "pricePerHour": 100,
-      "vehicleID": 344688,
-      "createdAt": "2024-04-16T18:26:16.028Z",
-      "updatedAt": "2024-04-25T12:04:44.181Z",
-      "__v": 0,
-      "quantity":1
-  },
-  {
-      "_id": "6628d13e079c7f5bb288cf54",
-      "vendorID": 844872,
-      "vehicleType": "scooty",
-      "subVehicleCompany": "Fascino",
-      "quantity": 500,
-      "basePrice": 300,
-      "pricePerHour": 150,
-      "vehicleID": 381710,
-      "createdAt": "2024-04-24T09:30:38.527Z",
-      "updatedAt": "2024-04-25T05:59:32.569Z",
-      "__v": 0,
-      "quantity":1
-  }
+    
   ]);
 
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const token = localStorage.getItem('token'); // Retrieve token from localStorage or wherever you store it
+        const token = localStorage.getItem('token'); 
         const response = await axios.get('http://localhost:5000/api/get-cart', {
           headers: {
-            'x-auth-token': token, // Include the token in the header
+            'x-auth-token': token, 
           },
         });
 
@@ -94,21 +53,21 @@ const Cart = () => {
               <p>Base Price: {item.vehicle.basePrice}</p>
               <p>Price Per Hour: {item.vehicle.pricePerHour}</p>
               <p>Quantity: {item.quantity}</p> */}
-              <h2>Vendor Name</h2>
-              <p className="name">Vehicle Name <span className='qt'>x1</span></p>
+              <h2>{item.vehicle.vendorName}</h2>
+              <p className="name">{item.vehicle.subVehicleCompany} <span className='qt'>x{item.quantity}</span></p>
               <div className="details">
                 <div>
-                  <p>Date</p>
-                  <input aria-label="Date" type="date" />
+                  <p>{item.date}</p>
                 </div>
+                &nbsp;   &nbsp;   &nbsp;
                 <div>
-                  <p>Time</p>
-                  <input aria-label="Time" type="time" />
+                  <p>{item.time}</p>
                 </div>
+                &nbsp;   &nbsp;   &nbsp;
                 <div>
                   <p>Price</p>
                   <div className="pr">
-                    ₹800
+                    ₹{item.vehicle.pricePerHour * item.quantity}
                   </div>
                 </div>
               </div>
