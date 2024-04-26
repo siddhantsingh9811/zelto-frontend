@@ -6,6 +6,7 @@ import Vendor from "./pages/VendorDetails";
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const Main = () => {
     return ( 
@@ -18,6 +19,7 @@ const Main = () => {
                 <Route path="/vendor/:id" element={<Vendor/>} />
                 <Route path="/login" element={<Login/>} />
                 <Route path="/signup" element={<SignUp/>} />
+                <Route path="/forgotpassword" element={<ForgotPassword/>} />
             </Routes>
         </div>
      );
