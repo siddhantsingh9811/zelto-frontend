@@ -48,37 +48,37 @@ const Cart = () => {
   }
   ]);
 
-  // useEffect(() => {
-  //   const fetchCartItems = async () => {
-  //     try {
-  //       const token = localStorage.getItem('token'); // Retrieve token from localStorage or wherever you store it
-  //       const response = await axios.get('http://localhost:5000/api/get-cart', {
-  //         headers: {
-  //           'x-auth-token': token, // Include the token in the header
-  //         },
-  //       });
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const token = localStorage.getItem('token'); // Retrieve token from localStorage or wherever you store it
+        const response = await axios.get('http://localhost:5000/api/get-cart', {
+          headers: {
+            'x-auth-token': token, // Include the token in the header
+          },
+        });
 
-  //       // Map over the cart items and fetch vehicle details for each item
-  //       const itemsWithDetails = await Promise.all(response.data.map(async (item) => {
-  //         const vehicleID = item.VehicleID; // Correct the field name
-  //         if (!vehicleID) {
-  //           throw new Error('Vehicle ID is undefined');
-  //         }
-  //         const vehicleResponse = await axios.get(`http://localhost:5000/api/vehicle/${vehicleID}`);
-  //         return {
-  //           ...item,
-  //           vehicle: vehicleResponse.data, // Add vehicle details to the item
-  //         };
-  //       }));
+        // Map over the cart items and fetch vehicle details for each item
+        const itemsWithDetails = await Promise.all(response.data.map(async (item) => {
+          const vehicleID = item.VehicleID; // Correct the field name
+          if (!vehicleID) {
+            throw new Error('Vehicle ID is undefined');
+          }
+          const vehicleResponse = await axios.get(`http://localhost:5000/api/vehicle/${vehicleID}`);
+          return {
+            ...item,
+            vehicle: vehicleResponse.data, // Add vehicle details to the item
+          };
+        }));
 
-  //       setCartItems(itemsWithDetails);
-  //     } catch (error) {
-  //       console.error('Error fetching cart items:', error);
-  //     }
-  //   };
+        setCartItems(itemsWithDetails);
+      } catch (error) {
+        console.error('Error fetching cart items:', error);
+      }
+    };
 
-  //   fetchCartItems();
-  // }, []);
+    fetchCartItems();
+  }, []);
 
   return (
     <div className="cart-container">

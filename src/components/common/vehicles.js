@@ -17,12 +17,15 @@ const IncrementDecrementBtn = ({ quantity, onIncrement, onDecrement }) => {
 
 const Vehicle = ({ vehicle, onQuantityChange }) => {
   const [quantity, setQuantity] = useState(0);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const handleIncrementCounter = () => {
-    if(quantity<vehicle.quantity){
+    if (quantity < vehicle.quantity) {
       setQuantity((prevQuantity) => prevQuantity + 1);
       onQuantityChange(vehicle._id, quantity + 1);
-
     }
   };
 
@@ -32,7 +35,71 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
       onQuantityChange(vehicle._id, quantity - 1);
     }
   };
-  
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
+
+  const handleTimeChange = (event) => {
+    setSelectedTime(event.target.value);
+  };
+
+  const handleAddToCart = () => {
+    if (quantity > 0 && selectedDate !== "" && selectedTime !== "") {
+      // You need to replace this with your actual endpoint URL
+      const apiUrl = "http://localhost:5000/api/add-cart/";
+
+      // Construct the payload
+      const payload = {
+        vehicleID: vehicle.vehicleID,
+        quantity: quantity,
+        date: selectedDate,
+        time: selectedTime,
+      };
+
+      // Make a POST request to your API
+      const token = localStorage.getItem("token");
+
+      // Construct headers object with token
+      const headers = {
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      };
+
+      // Make the POST request with the headers
+      fetch(apiUrl, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(payload),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle response if needed
+          console.log("Add to cart response:", data);
+          showAlertWithMessage("Item added to cart successfully.", "success");
+        })
+        .catch((error) => {
+          console.error("Error adding to cart:", error);
+        });
+    } else {
+      if (quantity === 0) {
+        showAlertWithMessage("Please select a quantity.", "error");
+      } else if (selectedDate === "") {
+        showAlertWithMessage("Please select a date.", "error");
+      } else if (selectedTime === "") {
+        showAlertWithMessage("Please select a time.", "error");
+      }
+    }
+  };
+
+  const showAlertWithMessage = (message, type) => {
+    setAlertMessage({ message, type });
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3000); // Hide alert after 3 seconds
+  };
+
   return (
     <div className="vehicle">
       <div className="img"></div>
@@ -47,8 +114,18 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
               Price: {vehicle.pricePerHour}/Hour • {vehicle.basePrice}/Hour
             </p>
             <div className="pickers">
-              <input aria-label="Date" type="date" />
-              <input aria-label="Time" type="time" />
+              <input
+                aria-label="Date"
+                type="date"
+                value={selectedDate}
+                onChange={handleDateChange}
+              />
+              <input
+                aria-label="Time"
+                type="time"
+                value={selectedTime}
+                onChange={handleTimeChange}
+              />
             </div>
           </div>
           <div className="right">
@@ -59,7 +136,18 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
             />
           </div>
         </div>
-        <div className="bottom">Add to Cart</div>
+        <div className="bottom" onClick={handleAddToCart}>
+          Add to Cart
+        </div>
+        {showAlert && (
+          <div
+            className={`alert ${
+              alertMessage.type === "success" ? "success" : "error"
+            }`}
+          >
+            {alertMessage.message}
+          </div>
+        )}
       </div>
     </div>
   );

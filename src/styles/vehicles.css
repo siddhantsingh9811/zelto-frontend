@@ -83,3 +83,33 @@
     font-size: 1em;
     margin-right: 10px;
 }
+
+
+/* In your vehicles.css file */
+.alert {
+    position: fixed;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f44336; /* Red background color by default */
+    color: white;
+    padding: 15px 20px;
+    border-radius: 50px; /* Corrected syntax: removed space */
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .success {
+    background-color: lightgreen; /* Green background color for success messages */
+  }
+  
+  .error {
+    background-color: #f44336; /* Red background color for error messages */
+  }
+  
+  .alert.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out; /* Add transition for fade-out */
+  }
