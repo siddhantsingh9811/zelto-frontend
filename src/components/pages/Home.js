@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -115,7 +116,13 @@ const Home = () => {
   );
 
   return (
-    <div className="home">
+    <motion.div
+      className="home"
+      initial={{ y: "200px", opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4, ease: "easeInOut", delay: 0.3 }}
+    >
       <div className="location">
         <h4>Find a ride in</h4>
         <div
@@ -255,7 +262,7 @@ const Home = () => {
           <VendorCard key={index} vendor={vendor} />
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

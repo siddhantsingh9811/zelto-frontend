@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook from React Router
+import { motion } from "framer-motion";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -11,7 +12,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await axios.post("http://localhost:5000/api/login", {
         username,
@@ -25,7 +26,7 @@ function Login() {
         setShowSuccessMessage(true);
         setUsername("");
         setPassword("");
-        
+
         // Redirect to "/home" endpoint
         navigate("/");
       } else {
@@ -37,7 +38,12 @@ function Login() {
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <motion.div
+      className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4, ease: "easeInOut", delay: 0.3 }}
+    >
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl leading-9 tracking-tight text-gray-900">
           Sign in to your Zelto account
@@ -148,7 +154,7 @@ function Login() {
           </a>
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }
 export default Login;

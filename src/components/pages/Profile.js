@@ -1,6 +1,13 @@
+import { motion } from "framer-motion";
+
 const Profile = () => {
   return (
-    <div>
+    <motion.div
+    initial={{ y: "200px", opacity: 0 }}
+    animate={{ y: 0, opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.4, ease: "easeInOut", delay: 0.3 }}
+    >
       <img
         className="block mx-auto my-auto w-20 h-20 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
         src="key.png"
@@ -71,7 +78,7 @@ const Profile = () => {
     </form>
 </div>
 
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 function SignUp() {
   const [email, setEmail] = useState("");
@@ -25,7 +26,12 @@ function SignUp() {
     }
   };
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <motion.div
+      className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4, ease: "easeInOut", delay: 0.3 }}
+    >
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl leading-9 tracking-tight  text-gray-900">
           Create Zelto Account
@@ -148,7 +154,7 @@ function SignUp() {
           </a>
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }
 export default SignUp;

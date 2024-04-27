@@ -3,8 +3,13 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import "../../styles/vendor.css";
 import Vehicles from "../common/vehicles";
+import {  motion } from 'framer-motion';
+
+
 
 const VendorDetails = () => {
+
+  
   const { id } = useParams();
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,7 +47,12 @@ const VendorDetails = () => {
     return <div>Loading...</div>;
   }
   return (
-    <div className="details">
+    <motion.div className="details"
+    initial={{ y: "200px", opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4, ease: "easeInOut", delay: 0.3 }}
+    >
       <div className="name">
         <h2>Vendor Number {id}</h2>
         {/* <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -169,7 +179,7 @@ const VendorDetails = () => {
       <div className="container">
         <Vehicles vehicles={vehicles} />
       </div>
-    </div>
+    </motion.div>
   );
 };
 
