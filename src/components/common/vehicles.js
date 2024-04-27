@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "../../styles/vehicles.css";
+import { toast } from "react-toastify";
 
 const IncrementDecrementBtn = ({ quantity, onIncrement, onDecrement }) => {
   return (
@@ -19,8 +20,7 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
   const [quantity, setQuantity] = useState(0);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+
 
   const handleIncrementCounter = () => {
     if (quantity < vehicle.quantity) {
@@ -78,29 +78,22 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
         .then((data) => {
           // Handle response if needed
           console.log("Add to cart response:", data);
-          showAlertWithMessage("Item added to cart successfully.", "success");
+          toast.success("Item added to cart successfully.");
         })
         .catch((error) => {
           console.error("Error adding to cart:", error);
         });
     } else {
       if (quantity === 0) {
-        showAlertWithMessage("Please select a quantity.", "error");
+        toast.error("Please select a quantity.");
       } else if (selectedDate === "") {
-        showAlertWithMessage("Please select a date.", "error");
+        toast.error("Please select a date.");
       } else if (selectedTime === "") {
-        showAlertWithMessage("Please select a time.", "error");
+        toast.error("Please select a time.");
       }
     }
   };
 
-  const showAlertWithMessage = (message, type) => {
-    setAlertMessage({ message, type });
-    setShowAlert(true);
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 3000); // Hide alert after 3 seconds
-  };
 
   return (
     <div className="vehicle">
@@ -144,15 +137,6 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
         <div className="bottom" onClick={handleAddToCart}>
           Add to Cart
         </div>
-        {showAlert && (
-          <div
-            className={`alert ${
-              alertMessage.type === "success" ? "success" : "error"
-            }`}
-          >
-            {alertMessage.message}
-          </div>
-        )}
       </div>
     </div>
   );

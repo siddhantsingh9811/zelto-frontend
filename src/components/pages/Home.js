@@ -3,6 +3,7 @@ import "../../styles/home.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,6 +23,7 @@ const Home = () => {
       })
       .catch((error) => {
         console.error("Error fetching vendors:", error);
+        toast.error("Error fetching vendors");
       });
 
     // Fetch locations using geolocation API

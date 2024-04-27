@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook from React Router
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const navigate = useNavigate(); // Access the navigate function from useNavigate
 
@@ -23,7 +23,7 @@ function Login() {
       if (response.status === 200) {
         const token = response.data.token;
         localStorage.setItem("token", token);
-        setShowSuccessMessage(true);
+        toast.success("Logged in successfully");
         setUsername("");
         setPassword("");
 
@@ -31,9 +31,11 @@ function Login() {
         navigate("/");
       } else {
         console.log("Error in login");
+        toast.error("Error in login");
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -115,34 +117,6 @@ function Login() {
             </button>
           </div>
         </form>
-
-        {showSuccessMessage && (
-          <div className="mt-4 mx-auto w-full max-w-sm">
-            <div
-              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md relative"
-              role="alert"
-            >
-              <span className="block sm:inline">Logged In</span>
-              <button
-                onClick={() => setShowSuccessMessage(false)}
-                className="absolute top-0 bottom-0 right-0 px-4 py-3"
-              >
-                <svg
-                  className="fill-current h-6 w-6 text-green-500"
-                  role="button"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <title>Close</title>
-                  <path
-                    fillRule="evenodd"
-                    d="M14.354 5.646a.5.5 0 0 0-.708 0L10 9.293 5.354 5.646a.5.5 0 1 0-.708.708L9.293 10l-4.647 4.646a.5.5 0 1 0 .708.708L10 10.707l4.646 4.647a.5.5 0 0 0 .708-.708L10.707 10l4.647-4.646a.5.5 0 0 0 0-.708z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        )}
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?{" "}
