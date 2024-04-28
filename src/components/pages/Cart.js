@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/cart.css"; // Import cart-specific styles
 import { motion } from "framer-motion";
+import Booking from "../common/Booking";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -103,6 +104,7 @@ const Cart = () => {
         ))}
       </div>
       <button className="proceed-to-checkout">Proceed to Checkout</button>
+      <Booking/>
     </motion.div>
   );
 };

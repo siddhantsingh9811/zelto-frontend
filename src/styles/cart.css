@@ -75,3 +75,13 @@
     margin-bottom: 20px;
     color: #333; /* Adjust the color as needed */
   }
+
+  .history .delete{
+    display: none!important;
+  }
+  .history .t{
+    margin-left: 10px;
+  }
+  .history .greyed{
+    filter: grayscale(1) !important;
+  }
