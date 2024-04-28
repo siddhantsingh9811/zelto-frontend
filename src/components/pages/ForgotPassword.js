@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 //import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -18,19 +21,22 @@ function ForgotPassword() {
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      // Call your API to send OTP to the provided email
+      // Make a POST request to send OTP to the provided email
+      const response = await axios.post("http://localhost:5000/api/forgot-password", { email });
+  
       // For demonstration purpose, let's assume the API call is successful
       setShowEmailInput(false);
       setShowOtpInput(true);
       setShowTimer(true);
-
+      toast.success(response.data.message || "OTP sent to your email");
+  
       // Start the timer
       const intervalId = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
-
+  
       // Clear the interval after 60 seconds
       setTimeout(() => {
         clearInterval(intervalId);
@@ -38,37 +44,49 @@ function ForgotPassword() {
       }, 60000);
     } catch (error) {
       console.error("Error:", error);
+      toast.error(error.response.data || "Failed to send OTP");
     }
   };
 
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      // Call your API to verify OTP
+      // Make a POST request to verify OTP
+      const response = await axios.post("http://localhost:5000/api/verify-otp", { email, otp });
+  
       // For demonstration purpose, let's assume the OTP verification is successful
       setShowOtpInput(false);
       setShowNewPasswordInput(true);
+      toast.success(response.data.message || "OTP Verified");
     } catch (error) {
       console.error("Error:", error);
+      toast.error(error.response.data.message || "Invalid OTP");
     }
   };
-
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
-
+  // Assuming formData contains the required data
+  
     try {
-      // Call your API to update the password
-      // For demonstration purpose, let's assume the password update is successful
+      const response = await axios.post('http://localhost:5000/api/reset-password', { email, newPassword, confirmPassword});
+  
+      if (!response.data) {
+        toast.error("Failed to reset password");
+        throw new Error('Failed to reset password');
+        
+      }
+  
       setShowNewPasswordInput(false);
       setShowSuccessMessage(true);
-
-      // Redirect to login page after 2 seconds
+      toast.success(response.data.message || "Password updated successfully");
+  
       setTimeout(() => {
         navigate("/login");
       }, 2000);
     } catch (error) {
       console.error("Error:", error);
+      toast.error(error.response.data || "Failed to reset password");
     }
   };
 
@@ -79,18 +97,34 @@ function ForgotPassword() {
   }, [timeLeft]);
 
   return (
-    
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className= "flex justify-center">
-        <svg width="70px" height="70px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11 11H9v-.148c0-.876.306-1.499 1-1.852.385-.195 1-.568 1-1a1.001 1.001 0 00-2 0H7c0-1.654 1.346-3 3-3s3 1 3 3-2 2.165-2 3zm-2 4h2v-2H9v2zm1-13a8 8 0 100 16 8 8 0 000-16z" fill="#5C5F62"/></svg>
-  
-</div>
-
+    <motion.div
+      className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4, ease: "easeInOut", delay: 0.3 }}
+    >
+      <div className="flex justify-center">
+        <svg
+          width="70px"
+          height="70px"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M11 11H9v-.148c0-.876.306-1.499 1-1.852.385-.195 1-.568 1-1a1.001 1.001 0 00-2 0H7c0-1.654 1.346-3 3-3s3 1 3 3-2 2.165-2 3zm-2 4h2v-2H9v2zm1-13a8 8 0 100 16 8 8 0 000-16z"
+            fill="#5C5F62"
+          />
+        </svg>
+      </div>
 
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl leading-9 tracking-tight text-gray-900">
           Forgot Password
         </h2>
+        {/* <h3 className="mt-10 text-center text-2xl leading-9 tracking-tight text-gray-900">
+          Enter Your Registered Email
+        </h3> */}
       </div>
 
       {showEmailInput && (
@@ -242,7 +276,7 @@ function ForgotPassword() {
           Log In
         </a>
       </p>
-    </div>
+    </motion.div>
   );
 }
 
