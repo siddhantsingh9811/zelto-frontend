@@ -1,64 +1,154 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+import {
+  FaUserCircle,
+  FaCalendarAlt,
+  FaEnvelope,
+  FaShoppingCart,
+  FaMotorcycle,
+  FaHistory,
+  FaWallet,
+  FaStar,
+  FaCreditCard,
+  FaAddressCard,
+} from "react-icons/fa";
+import "../../styles/UserProfile.css";
 
-const ProfileCard = () => {
+const Profile = ({ user }) => {
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    // Fetch current user data when component mounts
+    fetchCurrentUser();
+  }, []);
+
+  const handleLogout = () => {
+    // Delete the token from localStorage
+    localStorage.removeItem("token");
+
+    // Refresh the page
+    window.location.reload();
+  };
+
+  const fetchCurrentUser = async () => {
+    try {
+      // Make a GET request to fetch current user data
+      const token = localStorage.getItem("token");
+      const response = await fetch("http://localhost:5000/api/user/current", {
+        headers: {
+          "x-auth-token": token,
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+      setCurrentUser(data);
+    } catch (error) {
+      toast.error("Error fetching current user");
+      console.error("Error fetching current user:", error);
+    }
+  };
+
+  // Function to format the date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-4">
-        <div className="flex items-center mb-4">
-          <div className="w-16 h-16 rounded-full bg-purple-200 flex items-center justify-center mr-4">
-            <span className="text-purple-700 font-semibold">JD</span>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold">John Doe</h3>
-            <p className="text-gray-600">johndoe@gmail.com</p>
-            <p className="text-gray-500 text-sm">123 45 67 89</p>
-          </div>
-        </div>
-
-        <div className="mb-4">
-          <h4 className="text-gray-700 font-semibold mb-2">Personal Details</h4>
-          <div className="flex items-center mb-2">
-            <span className="text-gray-600 mr-2">Engaging Contact:</span>
-            <span className="text-gray-800">+1 123 456 789</span>
-          </div>
-          <div className="flex items-center mb-2">
-            <span className="text-gray-600 mr-2">Date of Birth:</span>
-            <span className="text-gray-800">01/01/1990</span>
-          </div>
-          <div className="flex items-center">
-            <span className="text-gray-600 mr-2">Address:</span>
-            <span className="text-gray-800">Something, Somewhere...</span>
+    <motion.div
+      className="user-profile-container"
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4, ease: "easeInOut", delay: 0.3 }}
+    >
+      <div className="user-profile">
+        <div className="profile-header">
+          <FaUserCircle className="profile-picture" />
+          <div className="profile-info">
+            <h2 className="username">
+              {currentUser ? currentUser.username : "Loading..."}
+            </h2>
+            <p className="email">
+              <FaEnvelope className="email-icon" />
+              {currentUser ? currentUser.email : "Loading..."}
+            </p>
           </div>
         </div>
-
-        <div className="mb-4">
-          <h4 className="text-gray-700 font-semibold mb-2">Documents</h4>
-          <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-red-200 flex items-center justify-center mr-2">
-              <span className="text-red-700">AC</span>
-            </div>
-            <div className="w-10 h-10 rounded-full bg-green-200 flex items-center justify-center mr-2">
-              <span className="text-green-700">DL</span>
-            </div>
-            <div className="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center mr-2">
-              <span className="text-blue-700">ID</span>
-            </div>
+        <div className="profile-details">
+          <div className="detail-item">
+            <FaCalendarAlt className="detail-icon" />
+            <p className="detail-text">
+              Account Created At:{" "}
+              {currentUser ? formatDate(currentUser.createdAt) : "Loading..."}
+            </p>
           </div>
-        </div>
-
-        <div>
-          <h4 className="text-gray-700 font-semibold mb-2">Payment Details</h4>
-          <button className="bg-gray-200 text-gray-700 rounded-full px-4 py-2">
-            Add Payment
-          </button>
+          <div className="detail-item">
+            <FaShoppingCart className="detail-icon" />
+            <p className="detail-text">
+              Cart Items:{" "}
+              {currentUser ? currentUser.cart.items?.length || 0 : "Loading..."}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+
+      <div className="additional-components">
+        <div className="component-item">
+          <FaMotorcycle className="component-icon" />
+          <h4 className="component-title">Book a Ride</h4>
+          <p className="component-description">
+            Book a ride and explore the city.
+          </p>
+        </div>
+
+        <div className="component-item">
+          <FaHistory className="component-icon" />
+          <h4 className="component-title">Ride History</h4>
+          <p className="component-description">View your past ride history.</p>
+        </div>
+
+        <div className="component-item">
+          <FaWallet className="component-icon" />
+          <h4 className="component-title">Wallet</h4>
+          <p className="component-description">
+            Manage your wallet and payment options.
+          </p>
+        </div>
+
+        {/* New components added below */}
+        <div className="component-item">
+          <FaStar className="component-icon" />
+          <h4 className="component-title">Rate Us</h4>
+          <p className="component-description">
+            Rate our services and provide feedback.
+          </p>
+        </div>
+
+        <div className="component-item">
+          <FaCreditCard className="component-icon" />
+          <h4 className="component-title">Payment Methods</h4>
+          <p className="component-description">Manage your payment methods.</p>
+        </div>
+
+        <div className="component-item">
+          <FaAddressCard className="component-icon" />
+          <h4 className="component-title">Address Book</h4>
+          <p className="component-description">Manage your saved addresses.</p>
+        </div>
+        {/* End of new components */}
+      </div>
+      <br></br>
+      <button className="logout-button" onClick={handleLogout}>
+        Logout
+      </button>
+    </motion.div>
   );
 };
 
-const App = () => {
-  return <ProfileCard />;
-};
-
-export default App;
+export default Profile;

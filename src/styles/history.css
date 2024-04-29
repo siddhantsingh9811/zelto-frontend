@@ -1,0 +1,46 @@
+.history-container {
+    max-width: 100%;
+    padding: 1rem;
+  }
+  
+  .history-heading {
+    font-size: 1.5rem;
+  }
+  
+  .history-item {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .history-item img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .item-details {
+    text-align: center;
+  }
+  
+  .buttons {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .buttons button {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+  
+  @media (max-width: 480px) {
+    .history-item h2 {
+      font-size: 1.2rem;
+    }
+  
+    .history-item p {
+      font-size: 0.9rem;
+    }
+  }
