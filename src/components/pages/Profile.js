@@ -1,85 +1,64 @@
-import { motion } from "framer-motion";
+import React from 'react';
 
-const Profile = () => {
+const ProfileCard = () => {
   return (
-    <motion.div
-    initial={{ y: "200px", opacity: 0 }}
-    animate={{ y: 0, opacity: 1 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.4, ease: "easeInOut", delay: 0.3 }}
-    >
-      <img
-        className="block mx-auto my-auto w-20 h-20 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
-        src="key.png"
-        alt="Bordered avatar"
-      />
+    <div className="min-h-screen flex justify-center items-center bg-gray-100">
+      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-4">
+        <div className="flex items-center mb-4">
+          <div className="w-16 h-16 rounded-full bg-purple-200 flex items-center justify-center mr-4">
+            <span className="text-purple-700 font-semibold">JD</span>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold">John Doe</h3>
+            <p className="text-gray-600">johndoe@gmail.com</p>
+            <p className="text-gray-500 text-sm">123 45 67 89</p>
+          </div>
+        </div>
 
-      <div className="px-1 py-5 sm:px-6 text-center">
-        <h3 className="text-xl leading-6 font-bold text-gray-900">
-          User Profile
-        </h3>
-        <p className="mt-1 max-w-2xl text-sm text-gray-500">
-          This is some information about the user.
-        </p>
+        <div className="mb-4">
+          <h4 className="text-gray-700 font-semibold mb-2">Personal Details</h4>
+          <div className="flex items-center mb-2">
+            <span className="text-gray-600 mr-2">Engaging Contact:</span>
+            <span className="text-gray-800">+1 123 456 789</span>
+          </div>
+          <div className="flex items-center mb-2">
+            <span className="text-gray-600 mr-2">Date of Birth:</span>
+            <span className="text-gray-800">01/01/1990</span>
+          </div>
+          <div className="flex items-center">
+            <span className="text-gray-600 mr-2">Address:</span>
+            <span className="text-gray-800">Something, Somewhere...</span>
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <h4 className="text-gray-700 font-semibold mb-2">Documents</h4>
+          <div className="flex items-center">
+            <div className="w-10 h-10 rounded-full bg-red-200 flex items-center justify-center mr-2">
+              <span className="text-red-700">AC</span>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-green-200 flex items-center justify-center mr-2">
+              <span className="text-green-700">DL</span>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center mr-2">
+              <span className="text-blue-700">ID</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="text-gray-700 font-semibold mb-2">Payment Details</h4>
+          <button className="bg-gray-200 text-gray-700 rounded-full px-4 py-2">
+            Add Payment
+          </button>
+        </div>
       </div>
-      <div className="border-t border-gray-200 py-5 sm:p-0 ml-10">
-        <dl className="sm:divide-y sm:divide-gray-200">
-          <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Email address</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              johndoe@example.com
-            </dd>
-          </div>
-          <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Phone number</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              (123) 456-7890
-            </dd>
-          </div>
-          <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Address</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              123 Main St
-              <br />
-              Anytown, USA 12345
-            </dd>
-          </div>
-        </dl>
-      </div>
-      <div className="flex justify-evenly">
-    <form action="#" className="relative h-32 w-20 mb-10 bg-gray-100 rounded-lg shadow-inner flex ">
-        <input type="file" id="file-upload1" className="hidden" />
-        <label htmlFor="file-upload" className="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer">
-            <p className="z-10 text-xs font-light text-center text-gray-500">Drag & Drop your files here</p>
-            <svg className="z-10 w-8 h-8 text-indigo-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
-            </svg>
-        </label>
-    </form>
-
-    <form action="#" className="relative h-32 w-20 mb-10 bg-gray-100 rounded-lg shadow-inner flex justify-evenly">
-        <input type="file" id="file-upload2" className="hidden" />
-        <label htmlFor="file-upload2" className="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer">
-            <p className="z-10 text-xs font-light text-center text-gray-500">Drag & Drop your files here</p>
-            <svg className="z-10 w-8 h-8 text-indigo-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
-            </svg>
-        </label>
-    </form>
-
-    <form action="#" className="relative h-32 w-20 mb-10 bg-gray-100 rounded-lg shadow-inner flex justify-evenly">
-        <input type="file" id="file-upload3" className="hidden" />
-        <label htmlFor="file-upload3" className="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer">
-            <p className="z-10 text-xs font-light text-center text-gray-500">Drag & Drop your files here</p>
-            <svg className="z-10 w-8 h-8 text-indigo-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
-            </svg>
-        </label>
-    </form>
-</div>
-
-    </motion.div>
+    </div>
   );
 };
 
-export default Profile;
+const App = () => {
+  return <ProfileCard />;
+};
+
+export default App;

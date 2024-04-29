@@ -3,6 +3,7 @@ import axios from "axios";
 import "../../styles/cart.css"; // Import cart-specific styles
 import { motion } from "framer-motion";
 import Booking from "../common/Booking";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -16,7 +17,8 @@ const Cart = () => {
             "x-auth-token": token,
           },
         });
-
+        toast.success("Cart items fetched successfully");
+        console.log(response);
         // Map over the cart items and fetch vehicle details for each item
         const itemsWithDetails = await Promise.all(
           response.data.map(async (item) => {
@@ -37,6 +39,8 @@ const Cart = () => {
         setCartItems(itemsWithDetails);
       } catch (error) {
         console.error("Error fetching cart items:", error);
+        toast.error(error.message || "Error fetching cart items");
+
       }
     };
 

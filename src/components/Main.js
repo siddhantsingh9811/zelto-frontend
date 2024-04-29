@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import PrivateRoutes from "./common/PrivateRoutes";
 import ForgotPassword from "./pages/ForgotPassword";
+import Checkout from "./common/Checkout";
 
 import { AnimatePresence } from "framer-motion";
 
@@ -31,6 +32,7 @@ const Main = () => {
             <Route path="/cart" element={<Cart />} />
             <Route path="/vendor/:id" element={<Vendor />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
