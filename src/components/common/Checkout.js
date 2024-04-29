@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/checkout.css";
+
 import axios from "axios";
 import {
   FaCalendarAlt,
@@ -7,8 +8,10 @@ import {
   FaCheckCircle,
   FaMapMarkerAlt,
 } from "react-icons/fa";
+
 import { motion } from "framer-motion";
 import Modal from "../pages/Modal";
+import { toast } from "react-toastify";
 
 const Checkout = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -25,6 +28,7 @@ const Checkout = () => {
           },
         });
 
+        console.log("Cart items response:", response.data);
         const { cartItems, totalPrice } = response.data;
         setCartItems(cartItems);
         setTotalPrice(totalPrice);
@@ -36,11 +40,34 @@ const Checkout = () => {
     fetchCart();
   }, []);
 
-  const handleConfirmBooking = async (bookingId) => {
-    console.log("Booking confirmed:", bookingId);
+  const handleConfirmBooking = () => {
     setIsModalOpen(true); // Open the modal when confirming booking
   };
 
+  const confirmBooking = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:5000/api/book-vehicle",
+        {}, // No data needed in the request body
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+        }
+      );
+      if (response.status === 201) {
+        toast.success("Booking confirmed");
+        console.log("Booking confirmed:", response.data.booking);
+      }
+    } catch (error) {
+      toast.error(error.response.data.msg);
+      console.error("Error confirming booking:", error);
+    } finally {
+      closeModal(); // Close the popup regardless of request success or failure
+    }
+  };
+  
   const closeModal = () => {
     setIsModalOpen(false); // Close the modal
   };
@@ -87,7 +114,7 @@ const Checkout = () => {
                   <p className="text-gray-600">{item.vehicleType}</p>
                   <p className="text-gray-600">{item.subVehicleCompany}</p>
                 </div>
-                <br></br>
+                <br />
                 {item.itemTotalPrice && item.quantity && (
                   <p className="text-gray-900 font-medium">
                     Price: ₹{item.itemTotalPrice.toFixed(2)} ({item.quantity}{" "}
@@ -106,31 +133,33 @@ const Checkout = () => {
             </div>
             <button
               className="btn-confirm bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-3 w-full"
-              onClick={() => handleConfirmBooking()}
+              onClick={handleConfirmBooking}
               style={{ width: "100%" }}
             >
               Confirm Booking
             </button>
           </div>
-          
         )}
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-  <div>
-    <h2 className="text-xl font-bold mb-4">Confirm Booking</h2>
-    <p>You will be charged ₹{totalPrice.toFixed(2)}</p><p> at the vendor's location.</p>
-    <button
-      className="btn-confirm bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-3 mr-3"
-      onClick={() => {
-        handleConfirmBooking();
-        closeModal();
-      }}
-    >
-      Confirm
-    </button>
-    
-  </div>
-</Modal>
+        <div>
+          <h2 className="text-xl font-bold mb-4">Confirm Booking</h2>
+          <p>You will be charged ₹{totalPrice.toFixed(2)}</p>
+          <p> at the vendor's location.</p>
+          <button
+            className="btn-confirm bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-3 mr-3"
+            onClick={confirmBooking} // Call the function to confirm the booking
+          >
+            Confirm
+          </button>
+          <button
+            className="btn-cancel bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded mt-3"
+            onClick={closeModal}
+          >
+            Cancel
+          </button>
+        </div>
+      </Modal>
     </motion.div>
   );
 };

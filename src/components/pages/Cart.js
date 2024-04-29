@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../styles/cart.css"; // Import cart-specific styles
 import { motion } from "framer-motion";
@@ -17,7 +18,16 @@ const Cart = () => {
             "x-auth-token": token,
           },
         });
-        toast.success("Cart items fetched successfully");
+        toast.success("Cart items fetched successfully", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         console.log(response);
         // Map over the cart items and fetch vehicle details for each item
         const itemsWithDetails = await Promise.all(
@@ -40,12 +50,13 @@ const Cart = () => {
       } catch (error) {
         console.error("Error fetching cart items:", error);
         toast.error(error.message || "Error fetching cart items");
-
       }
     };
 
     fetchCartItems();
   }, []);
+
+  const navigate = useNavigate();
 
   return (
     <motion.div
@@ -107,8 +118,13 @@ const Cart = () => {
           </div>
         ))}
       </div>
-      <button className="proceed-to-checkout">Proceed to Checkout</button>
-      <Booking/>
+      <button
+        className="proceed-to-checkout"
+        onClick={() => navigate("/checkout")}
+      >
+        Proceed to Checkout
+      </button>
+      <Booking />
     </motion.div>
   );
 };
