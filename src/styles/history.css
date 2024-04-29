@@ -1,41 +1,48 @@
-.history-container {
-    max-width: 100%;
-    padding: 1rem;
-  }
-  
-  .history-heading {
-    font-size: 1.5rem;
-  }
-  
-  .history-item {
+.history-item {
+    display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  
-  .history-item img {
-    width: 100%;
-    max-width: 200px;
-    height: auto;
-    margin-right: 0;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border-radius: 8px;
+    padding: 1rem;
     margin-bottom: 1rem;
   }
   
-  .item-details {
-    text-align: center;
+  .history-item img {
+    width: 100%; /* Make the image cover the entire card */
+    height: auto;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
   
-  .buttons {
+  .history-item .item-details {
+    width: 100%; /* Make the item details cover the entire width */
+  }
+  
+  .history-item .buttons {
+    display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
     margin-top: 1rem;
   }
   
-  .buttons button {
-    width: 100%;
-    margin: 0.5rem 0;
+  .history-item button {
+    width: calc(100% - 2rem); /* Make the buttons cover the entire width minus margins */
+    max-width: 200px;
+    margin: 0.5rem;
+  }
+  
+  .history-item button svg {
+    margin-right: 0.5rem;
   }
   
   @media (max-width: 480px) {
+    .history-heading {
+      font-size: 1.5rem;
+    }
+  
     .history-item h2 {
       font-size: 1.2rem;
     }
@@ -44,3 +51,4 @@
       font-size: 0.9rem;
     }
   }
+  
