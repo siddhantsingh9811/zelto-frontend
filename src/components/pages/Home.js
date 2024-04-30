@@ -10,7 +10,7 @@ const Home = () => {
   const [vendors, setVendors] = useState([]);
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
-  const [sortBy, setSortBy] = useState("name");
+  const [sortBy, setSortBy] = useState("price");
   const [showSortingOptions, setShowSortingOptions] = useState(false);
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
 
@@ -239,13 +239,13 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="filter">
+      {/* <div className="filter">
         <select value={sortBy} onChange={handleSortChange}>
           <option value="name">Sort by Name</option>
           <option value="price">Sort by Price</option>
           <option value="distance">Sort by Distance</option>
         </select>
-      </div>
+      </div> */}
       <h2>What do you need?</h2>
       <div className="buttons" id="foo">
         <div className="button active" role="button" onClick={handleClick}>

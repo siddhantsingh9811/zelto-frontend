@@ -19,7 +19,6 @@ const History = () => {
           "x-auth-token": token,
         },
       });
-      console.log(response.data)
       setBookings(response.data);
     } catch (error) {
       toast.error("Error fetching bookings");
@@ -40,7 +39,6 @@ const History = () => {
         },
       });
       if (response.status === 200) {
-        // Refresh bookings after cancellation
         fetchBookings();
       }
     } catch (error) {
@@ -49,10 +47,11 @@ const History = () => {
     }
   };
 
-const handleCompleteRide = async (bookingID) => {
-  setSelectedBooking(String(bookingID)); // Ensure bookingId is a string
-  setIsModalOpen(true);
-};
+  const handleCompleteRide = async (bookingID) => {
+    setSelectedBooking(String(bookingID)); // Ensure bookingId is a string
+    setIsModalOpen(true);
+  };
+
   const handleCloseModal = () => {
     setSelectedBooking(null);
     setIsModalOpen(false);
@@ -71,7 +70,6 @@ const handleCompleteRide = async (bookingID) => {
         }
       );
       if (response.status === 200) {
-        // Refresh bookings after ride completion
         fetchBookings();
         setIsModalOpen(false);
         toast.success("Ride completed successfully");
@@ -93,54 +91,58 @@ const handleCompleteRide = async (bookingID) => {
         <FaCircle className="mr-2 text-green-500" />
         Active Bookings
       </h2>
-      <div className="history-list">
-        {bookings.map((booking) => (
-          <div
-            className="history-item bg-white shadow-xl rounded-lg p-4 mb-4 flex flex-col md:flex-row items-center"
-            key={booking._id}
-          >
-            <img
-              src="https://bd.gaadicdn.com/processedimages/tvs/tvs-scooty-zest/494X300/tvs-scooty-zest6476deb7d6ae9.jpg"
-              alt=""
-              className="w-24 h-24 rounded-md object-cover mb-4 md:mb-0 md:mr-4"
-            />
-            <div className="item-details">
-              {booking.items.map((item, index) => (
-                <React.Fragment key={index}>
-                  <h2 className="flex items-center">
-                    {item.subVehicleCompany}{" "}
-                    <FaRegClock className="ml-2 text-gray-500" />
-                  </h2>
-                  <p className="name">
-                    Quantity: {item.quantity}{" "}
-                    <span className="qt">Price: ₹{item.price}</span>
-                  </p>
-                  <div className="details flex">
-                    <div className="">
-                      <p>Start Time: {item.startTime}</p>
+      {bookings.length === 0 ? (
+        <p className="text-center text-gray-500">You have no bookings</p>
+      ) : (
+        <div className="history-list">
+          {bookings.map((booking) => (
+            <div
+              className="history-item bg-white shadow-xl rounded-lg p-4 mb-4 flex flex-col md:flex-row items-center"
+              key={booking._id}
+            >
+              <img
+                src="https://bd.gaadicdn.com/processedimages/tvs/tvs-scooty-zest/494X300/tvs-scooty-zest6476deb7d6ae9.jpg"
+                alt=""
+                className="w-24 h-24 rounded-md object-cover mb-4 md:mb-0 md:mr-4"
+              />
+              <div className="item-details">
+                {booking.items.map((item, index) => (
+                  <React.Fragment key={index}>
+                    <h2 className="flex items-center">
+                      {item.subVehicleCompany}{" "}
+                      <FaRegClock className="ml-2 text-gray-500" />
+                    </h2>
+                    <p className="name">
+                      Quantity: {item.quantity}{" "}
+                      <span className="qt">Price: ₹{item.price}</span>
+                    </p>
+                    <div className="details flex">
+                      <div className="">
+                        <p>Start Time: {item.startTime}</p>
+                      </div>
                     </div>
-                  </div>
-                  <br />
-                </React.Fragment>
-              ))}
+                    <br />
+                  </React.Fragment>
+                ))}
+              </div>
+              <div className="buttons mt-2 md:ml-auto w-full md:w-auto">
+                <button
+                  className="btn-cancel bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded w-full md:w-auto"
+                  onClick={() => handleCancelBooking(booking.bookingID)}
+                >
+                  Cancel Booking
+                </button>
+                <button
+                  className="btn-confirm bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded ml-2 mt-2 md:mt-0 w-full md:w-auto flex items-center"
+                  onClick={() => handleCompleteRide(booking.bookingID)}
+                >
+                  Complete Ride <FaCheckCircle className="ml-2" />
+                </button>
+              </div>
             </div>
-            <div className="buttons mt-2 md:ml-auto w-full md:w-auto">
-              <button
-                className="btn-cancel bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded w-full md:w-auto"
-                onClick={() => handleCancelBooking(booking.bookingID)}
-              >
-                Cancel Booking
-              </button>
-              <button
-                className="btn-confirm bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded ml-2 mt-2 md:mt-0 w-full md:w-auto flex items-center"
-                onClick={() => handleCompleteRide(booking.bookingID)}
-              >
-                Complete Ride <FaCheckCircle className="ml-2" />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <div className="text-center">
           <p className="text-lg font-semibold mb-4">Confirm Ride Completion</p>
