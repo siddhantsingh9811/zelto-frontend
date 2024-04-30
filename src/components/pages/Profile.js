@@ -14,9 +14,11 @@ import {
   FaAddressCard,
 } from "react-icons/fa";
 import "../../styles/UserProfile.css";
+import SplashScreen from "../common/SplashScreen";
 
 const Profile = ({ user }) => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Fetch current user data when component mounts
@@ -33,6 +35,7 @@ const Profile = ({ user }) => {
 
   const fetchCurrentUser = async () => {
     try {
+      setLoading(true); // Set loading to true when fetching data
       // Make a GET request to fetch current user data
       const token = localStorage.getItem("token");
       const response = await fetch("http://localhost:5000/api/user/current", {
@@ -44,7 +47,9 @@ const Profile = ({ user }) => {
       const data = await response.json();
       console.log(data);
       setCurrentUser(data);
+      setLoading(false); // Set loading to false after data is fetched
     } catch (error) {
+      setLoading(false); // Set loading to false if there's an error
       toast.error("Error fetching current user");
       console.error("Error fetching current user:", error);
     }
@@ -67,6 +72,7 @@ const Profile = ({ user }) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4, ease: "easeInOut", delay: 0.3 }}
     >
+      {loading && <SplashScreen />} {/* Display splash screen while loading */}
       <div className="user-profile">
         <div className="profile-header">
           <FaUserCircle className="profile-picture" />
@@ -121,7 +127,6 @@ const Profile = ({ user }) => {
           </p>
         </div>
 
-        {/* New components added below */}
         <div className="component-item">
           <FaStar className="component-icon" />
           <h4 className="component-title">Rate Us</h4>
@@ -141,7 +146,6 @@ const Profile = ({ user }) => {
           <h4 className="component-title">Address Book</h4>
           <p className="component-description">Manage your saved addresses.</p>
         </div>
-        {/* End of new components */}
       </div>
       <br></br>
       <button className="logout-button" onClick={handleLogout}>

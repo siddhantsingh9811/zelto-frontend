@@ -85,3 +85,16 @@
   .history .greyed{
     filter: grayscale(1) !important;
   }
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Make the container full height of the viewport */
+  }
+  
+  .loading-gif {
+    max-width: 100px; /* Adjust the maximum width of the loading GIF */
+    max-height: 100px; /* Adjust the maximum height of the loading GIF */
+  }
+  

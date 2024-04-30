@@ -1,37 +1,38 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/checkout.css";
-
 import axios from "axios";
-import {
-  FaCalendarAlt,
-  FaClock,
-  FaCheckCircle,
-  FaMapMarkerAlt,
-} from "react-icons/fa";
-
+import { FaCalendarAlt, FaClock, FaCheckCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Modal from "../pages/Modal";
 import { toast } from "react-toastify";
+import SplashScreen from "../common/SplashScreen"; // Import SplashScreen component
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 
 const Checkout = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true); // State to manage loading status
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCart = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:5000/api/checkout", {
-          headers: {
-            "x-auth-token": token,
-          },
-        });
+        const response = await axios.get(
+          "http://localhost:5000/api/checkout",
+          {
+            headers: {
+              "x-auth-token": token,
+            },
+          }
+        );
 
         console.log("Cart items response:", response.data);
         const { cartItems, totalPrice } = response.data;
         setCartItems(cartItems);
         setTotalPrice(totalPrice);
+        setLoading(false); // Set loading to false after data is fetched
       } catch (error) {
         console.error("Error fetching cart items:", error);
       }
@@ -59,6 +60,7 @@ const Checkout = () => {
       if (response.status === 201) {
         toast.success("Booking confirmed");
         console.log("Booking confirmed:", response.data.booking);
+        navigate("/history"); // Navigate to /history route after booking confirmation
       }
     } catch (error) {
       toast.error(error.response.data.msg);
@@ -67,7 +69,7 @@ const Checkout = () => {
       closeModal(); // Close the popup regardless of request success or failure
     }
   };
-  
+
   const closeModal = () => {
     setIsModalOpen(false); // Close the modal
   };
@@ -88,7 +90,9 @@ const Checkout = () => {
           <FaCheckCircle className="text-green-500 mr-2" />
           Current Cart
         </h3>
-        {cartItems.length === 0 ? (
+        {loading ? ( // Render SplashScreen while loading
+          <SplashScreen />
+        ) : cartItems.length === 0 ? (
           <p className="text-gray-600 text-center">No items in the cart</p>
         ) : (
           <div className="bookings-list">

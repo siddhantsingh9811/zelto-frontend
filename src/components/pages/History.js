@@ -4,22 +4,28 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { FaCheckCircle, FaRegClock, FaCircle } from "react-icons/fa";
 import Modal from "./Modal";
+import SplashScreen from "../common/SplashScreen"; // Import SplashScreen component
 import "../../styles/history.css";
 
 const History = () => {
   const [bookings, setBookings] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true); // State to manage loading status
 
   const fetchBookings = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/my-bookings", {
-        headers: {
-          "x-auth-token": token,
-        },
-      });
+      const response = await axios.get(
+        "http://localhost:5000/api/my-bookings",
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+        }
+      );
       setBookings(response.data);
+      setLoading(false); // Set loading to false after data is fetched
     } catch (error) {
       toast.error("Error fetching bookings");
       console.error("Error fetching bookings:", error);
@@ -33,11 +39,14 @@ const History = () => {
   const handleCancelBooking = async (bookingId) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.delete(`http://localhost:5000/api/bookings/${bookingId}`, {
-        headers: {
-          "x-auth-token": token,
-        },
-      });
+      const response = await axios.delete(
+        `http://localhost:5000/api/bookings/${bookingId}`,
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+        }
+      );
       if (response.status === 200) {
         fetchBookings();
       }
@@ -91,7 +100,9 @@ const History = () => {
         <FaCircle className="mr-2 text-green-500" />
         Active Bookings
       </h2>
-      {bookings.length === 0 ? (
+      {loading ? ( // Render SplashScreen while loading
+        <SplashScreen />
+      ) : bookings.length === 0 ? (
         <p className="text-center text-gray-500">You have no bookings</p>
       ) : (
         <div className="history-list">

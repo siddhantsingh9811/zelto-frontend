@@ -3,23 +3,22 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import "../../styles/vendor.css";
 import Vehicles from "../common/vehicles";
-import {  motion } from 'framer-motion';
-
-
+import { motion } from "framer-motion";
+import SplashScreen from "../common/SplashScreen";
 
 const VendorDetails = () => {
-
-  
   const { id } = useParams();
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [addToCartLoading, setAddToCartLoading] = useState(false); 
 
   useEffect(() => {
     const fetchVendorVehicles = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/vendor/${id}/vehicles`);
+        const response = await axios.get(
+          `http://localhost:5000/api/vendor/${id}/vehicles`
+        );
         setVehicles(response.data);
-        console.log(response.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching vendor vehicles:", error);
@@ -43,21 +42,36 @@ const VendorDetails = () => {
     event.currentTarget.classList.toggle("active");
   };
 
+  const handleAddToCart = async (vehicleId) => {
+    try {
+      setAddToCartLoading(true);
+      await axios.post(`http://localhost:5000/api/add-to-cart/${vehicleId}`);
+      console.log("Vehicle added to cart successfully");
+    } catch (error) {
+      console.error("Error adding vehicle to cart:", error);
+    } finally {
+      setAddToCartLoading(false);
+    }
+  };
+
   if (loading) {
-    return <div>Loading...</div>;
+    return <div><SplashScreen></SplashScreen></div>;
   }
+
   return (
-    <motion.div className="details"
-    initial={{ y: "200px", opacity: 0 }}
+    <motion.div
+      className="details"
+      initial={{ y: "200px", opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4, ease: "easeInOut", delay: 0.3 }}
     >
+      {addToCartLoading && <SplashScreen />}
       <div className="name">
         <h2>Vendor Number {id}</h2>
-        {/* <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M16.44 3.10001C14.63 3.10001 13.01 3.98001 12 5.33001C10.99 3.98001 9.37 3.10001 7.56 3.10001C4.49 3.10001 2 5.60001 2 8.69001C2 9.88001 2.19 10.98 2.52 12C4.1 17 8.97 19.99 11.38 20.81C11.72 20.93 12.28 20.93 12.62 20.81C15.03 19.99 19.9 17 21.48 12C21.81 10.98 22 9.88001 22 8.69001C22 5.60001 19.51 3.10001 16.44 3.10001Z" fill="#755CEC"/>
-            </svg> */}
+            </svg>
       </div>
       <div className="name">
         <p>Something something address, block - A</p>
@@ -113,8 +127,8 @@ const VendorDetails = () => {
               viewBox="0 0 48 48"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-            >+
-            
+            >
+              +
               <path
                 d="M8.4 36.146C8.4 36.146 8.206 37.656 8.4 38.374C8.535 38.872 8.664 39.711 9.18 39.711H12.077C12.593 39.711 12.722 38.872 12.857 38.374C13.051 37.657 12.857 36.146 12.857 36.146"
                 stroke-linecap="round"

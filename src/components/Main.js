@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp";
 import PrivateRoutes from "./common/PrivateRoutes";
 import ForgotPassword from "./pages/ForgotPassword";
 import Checkout from "./common/Checkout";
+import SplashScreen from "./common/SplashScreen";
 
 import { AnimatePresence } from "framer-motion";
 
@@ -31,11 +32,13 @@ const Main = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/vendor/:id" element={<Vendor />} />
-            <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/splash" element={<SplashScreen />} />
+
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
         </Routes>
       </AnimatePresence>
     </div>
