@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-//import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -21,23 +21,22 @@ function ForgotPassword() {
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      // Make a POST request to send OTP to the provided email
-      const response = await axios.post("http://localhost:5000/api/forgot-password", { email });
-  
-      // For demonstration purpose, let's assume the API call is successful
+      const response = await axios.post(
+        "http://localhost:5000/api/forgot-password",
+        { email }
+      );
+
       setShowEmailInput(false);
       setShowOtpInput(true);
       setShowTimer(true);
       toast.success(response.data.message || "OTP sent to your email");
-  
-      // Start the timer
+
       const intervalId = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
-  
-      // Clear the interval after 60 seconds
+
       setTimeout(() => {
         clearInterval(intervalId);
         setShowTimer(false);
@@ -50,12 +49,13 @@ function ForgotPassword() {
 
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      // Make a POST request to verify OTP
-      const response = await axios.post("http://localhost:5000/api/verify-otp", { email, otp });
-  
-      // For demonstration purpose, let's assume the OTP verification is successful
+      const response = await axios.post(
+        "http://localhost:5000/api/verify-otp",
+        { email, otp }
+      );
+
       setShowOtpInput(false);
       setShowNewPasswordInput(true);
       toast.success(response.data.message || "OTP Verified");
@@ -64,23 +64,29 @@ function ForgotPassword() {
       toast.error(error.response.data.message || "Invalid OTP");
     }
   };
+
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
-  // Assuming formData contains the required data
-  
+
     try {
-      const response = await axios.post('http://localhost:5000/api/reset-password', { email, newPassword, confirmPassword});
-  
+      const response = await axios.post(
+        "http://localhost:5000/api/reset-password",
+        {
+          email,
+          newPassword,
+          confirmPassword,
+        }
+      );
+
       if (!response.data) {
         toast.error("Failed to reset password");
-        throw new Error('Failed to reset password');
-        
+        throw new Error("Failed to reset password");
       }
-  
+
       setShowNewPasswordInput(false);
       setShowSuccessMessage(true);
       toast.success(response.data.message || "Password updated successfully");
-  
+
       setTimeout(() => {
         navigate("/login");
       }, 2000);
@@ -98,46 +104,33 @@ function ForgotPassword() {
 
   return (
     <motion.div
-      className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
+      className="flex min-h-screen flex-col justify-center items-center px-6 py-8 mx-4 bg-gray-100 rounded-xl shadow-md"
       animate={{ y: 0, opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4, ease: "easeInOut", delay: 0.3 }}
     >
-      <div className="flex justify-center">
-        <svg
-          width="70px"
-          height="70px"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M11 11H9v-.148c0-.876.306-1.499 1-1.852.385-.195 1-.568 1-1a1.001 1.001 0 00-2 0H7c0-1.654 1.346-3 3-3s3 1 3 3-2 2.165-2 3zm-2 4h2v-2H9v2zm1-13a8 8 0 100 16 8 8 0 000-16z"
-            fill="#5C5F62"
-          />
-        </svg>
-      </div>
-
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+      <div className="sm:max-w-sm w-full">
         <h2 className="mt-10 text-center text-2xl leading-9 tracking-tight text-gray-900">
+          <FaEnvelope className="inline-block mr-2 text-indigo-600" />
           Forgot Password
         </h2>
-        {/* <h3 className="mt-10 text-center text-2xl leading-9 tracking-tight text-gray-900">
-          Enter Your Registered Email
-        </h3> */}
       </div>
 
-      {showEmailInput && (
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleEmailSubmit}>
+      <div className="mt-8 sm:max-w-sm w-full space-y-6">
+        {showEmailInput && (
+          <form
+            className="bg-white p-6 rounded-lg shadow-md"
+            onSubmit={handleEmailSubmit}
+          >
             <div>
               <label
                 htmlFor="email"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
+                <FaEnvelope className="inline-block mr-2 text-indigo-600" />
                 Email
               </label>
-              <div className="mt-2 flex">
+              <div className="mt-2">
                 <input
                   id="email"
                   value={email}
@@ -145,7 +138,7 @@ function ForgotPassword() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="w-full rounded-md border border-gray-300 py-2 px-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
@@ -160,20 +153,22 @@ function ForgotPassword() {
               </button>
             </div>
           </form>
-        </div>
-      )}
+        )}
 
-      {showOtpInput && (
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleOtpSubmit}>
+        {showOtpInput && (
+          <form
+            className="bg-white p-6 rounded-lg shadow-md"
+            onSubmit={handleOtpSubmit}
+          >
             <div>
               <label
                 htmlFor="otp"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
+                <FaLock className="inline-block mr-2 text-indigo-600" />
                 Enter OTP
               </label>
-              <div className="mt-2 flex">
+              <div className="mt-2">
                 <input
                   id="otp"
                   value={otp}
@@ -181,7 +176,7 @@ function ForgotPassword() {
                   type="text"
                   autoComplete="off"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="w-full rounded-md border border-gray-300 py-2 px-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
                   onChange={(e) => setOtp(e.target.value)}
                 />
               </div>
@@ -196,20 +191,22 @@ function ForgotPassword() {
               </button>
             </div>
           </form>
-        </div>
-      )}
+        )}
 
-      {showNewPasswordInput && (
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handlePasswordSubmit}>
+        {showNewPasswordInput && (
+          <form
+            className="bg-white p-6 rounded-lg shadow-md"
+            onSubmit={handlePasswordSubmit}
+          >
             <div>
               <label
                 htmlFor="newPassword"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
+                <FaLock className="inline-block mr-2 text-indigo-600" />
                 New Password
               </label>
-              <div className="mt-2 flex">
+              <div className="mt-2">
                 <input
                   id="newPassword"
                   value={newPassword}
@@ -217,7 +214,7 @@ function ForgotPassword() {
                   type="password"
                   autoComplete="new-password"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="w-full rounded-md border border-gray-300 py-2 px-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
               </div>
@@ -228,9 +225,10 @@ function ForgotPassword() {
                 htmlFor="confirmPassword"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
+                <FaLock className="inline-block mr-2 text-indigo-600" />
                 Confirm Password
               </label>
-              <div className="mt-2 flex">
+              <div className="mt-2">
                 <input
                   id="confirmPassword"
                   value={confirmPassword}
@@ -238,7 +236,7 @@ function ForgotPassword() {
                   type="password"
                   autoComplete="new-password"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="w-full rounded-md border border-gray-300 py-2 px-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
@@ -253,29 +251,29 @@ function ForgotPassword() {
               </button>
             </div>
           </form>
-        </div>
-      )}
+        )}
 
-      {showSuccessMessage && (
-        <div className="mt-4 mx-auto w-full max-w-sm">
-          <div
-            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md relative"
-            role="alert"
-          >
-            <span className="block sm:inline">Password Updated</span>
+        {showSuccessMessage && (
+          <div className="mt-4 mx-auto w-full max-w-sm">
+            <div
+              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md relative"
+              role="alert"
+            >
+              <span className="block sm:inline">Password Updated</span>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <p className="mt-10 text-center text-sm text-gray-500">
-        Remember your password?{" "}
-        <a
-          href="/login"
-          className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-        >
-          Log In
-        </a>
-      </p>
+        <p className="mt-10 text-center text-sm text-gray-500">
+          Remember your password?{" "}
+          <a
+            href="/login"
+            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          >
+            Log In
+          </a>
+        </p>
+      </div>
     </motion.div>
   );
 }

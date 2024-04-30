@@ -1,17 +1,18 @@
 import { Outlet, Navigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const PrivateRoutes = () => {
-    // Retrieve the token from local storage
-    const token = localStorage.getItem('token');
+  const location = useLocation(); 
+  const token = localStorage.getItem('token');
+  const isAuthenticated = token !== null;
 
-    // Check if the token exists
-    const isAuthenticated = token !== null;
+  const privateRoutePaths = ['/home', '/history', '/profile', '/cart', '/vendor', '/checkout', '/splash'];
 
-    return (
-        // If the user is authenticated, render the child routes
-        // Otherwise, redirect the user to the login page
-        isAuthenticated ? <Outlet /> : <Navigate to="/login" />
-    );
+  const isPrivateRoute = privateRoutePaths.some(path => location.pathname.startsWith(path)); 
+
+  return (
+    isAuthenticated && isPrivateRoute ? <Outlet /> : <Navigate to="/login" />
+  );
 };
 
 export default PrivateRoutes;

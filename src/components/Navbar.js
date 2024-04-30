@@ -14,7 +14,7 @@ const Navbar = () => {
     return ( 
         <div className="navbar">
             <ul id="foo">
-                <Link to="/" style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                <Link to="/home" style={{ color: 'inherit', textDecoration: 'inherit'}}>
                     <li className={activeLink === "/" ? "active" : ""} onClick={() => handleClick("/")}>
                         <svg preserveAspectRatio="true" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 18V15" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

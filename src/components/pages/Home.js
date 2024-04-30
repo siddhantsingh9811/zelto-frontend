@@ -5,6 +5,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 
+
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [vendors, setVendors] = useState([]);

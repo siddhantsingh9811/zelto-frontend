@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook from React Router
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
+import { FaUserAlt, FaLock, FaEnvelope } from "react-icons/fa";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate(); // Access the navigate function from useNavigate
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,16 +20,13 @@ function Login() {
         password,
       });
 
-      // Check if login was successful
       if (response.status === 200) {
         const token = response.data.token;
         localStorage.setItem("token", token);
         toast.success("Logged in successfully");
         setUsername("");
         setPassword("");
-
-        // Redirect to "/home" endpoint
-        navigate("/");
+        navigate("/home");
       } else {
         console.log("Error in login");
         toast.error("Error in login");
@@ -41,28 +39,26 @@ function Login() {
 
   return (
     <motion.div
-      className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
+      className="flex min-h-screen flex-col justify-center items-center px-6 py-8 mx-4 bg-gray-100 rounded-xl shadow-md"
       animate={{ y: 0, opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4, ease: "easeInOut", delay: 0.3 }}
     >
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+      <div className="sm:max-w-md w-full">
         <h2 className="mt-10 text-center text-2xl leading-9 tracking-tight text-gray-900">
+          <FaEnvelope className="inline-block mr-2 text-indigo-600" />
           Sign in to your Zelto account
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" onSubmit={handleSubmit}>
+      <div className="mt-8 sm:max-w-sm w-full space-y-6">
+        <form className="bg-white p-6 rounded-lg shadow-md" onSubmit={handleSubmit}>
           <div>
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
+            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+              <FaUserAlt className="inline-block mr-2 text-indigo-600" />
               Username
             </label>
-            <div className="mt-2 flex">
-              <img src="frame.png" alt="key" className="h-5 w-5 mr-2 mt-2" />
+            <div className="mt-2">
               <input
                 id="username"
                 value={username}
@@ -70,7 +66,7 @@ function Login() {
                 type="username"
                 autoComplete="username"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="w-full rounded-md border border-gray-300 py-2 px-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
@@ -78,23 +74,17 @@ function Login() {
 
           <div>
             <div className="flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
+              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                <FaLock className="inline-block mr-2 text-indigo-600" />
                 Password
               </label>
               <div className="text-sm">
-                <a
-                  href="/forgotpassword"
-                  className="font-semibold text-[#755CEC] hover:text-indigo-500"
-                >
+                <a href="/forgotpassword" className="font-semibold text-[#755CEC] hover:text-indigo-500">
                   Forgot password?
                 </a>
               </div>
             </div>
-            <div className="mt-2 flex">
-              <img src="key.png" alt="key" className="h-5 w-5 mr-2 mt-2" />
+            <div className="mt-2">
               <input
                 id="password"
                 value={password}
@@ -102,7 +92,7 @@ function Login() {
                 type="password"
                 autoComplete="current-password"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="w-full rounded-md border border-gray-300 py-2 px-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
@@ -111,7 +101,7 @@ function Login() {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-3xl bg-[#755CEC] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="w-full flex justify-center items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
             >
               Sign in
             </button>
@@ -120,10 +110,7 @@ function Login() {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?{" "}
-          <a
-            href="/signup"
-            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-          >
+          <a href="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
             Sign Up
           </a>
         </p>
@@ -131,4 +118,5 @@ function Login() {
     </motion.div>
   );
 }
+
 export default Login;
