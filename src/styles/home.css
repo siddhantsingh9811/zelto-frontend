@@ -103,13 +103,7 @@ margin-left: 5px;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 
 }
-.vendor .img {
-    width: 100%;
-    height: 200px;
-    background-image: url("https://bd.gaadicdn.com/processedimages/tvs/tvs-scooty-zest/494X300/tvs-scooty-zest6476deb7d6ae9.jpg");
-    background-position: center;
-    background-size: cover;
-}
+
 .vendor .info{
     display: flex;
     justify-content: space-between;

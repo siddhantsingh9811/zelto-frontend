@@ -21,7 +21,6 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
 
-
   const handleIncrementCounter = () => {
     if (quantity < vehicle.quantity) {
       setQuantity((prevQuantity) => prevQuantity + 1);
@@ -40,7 +39,6 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
     console.log(selectedDate);
     setSelectedDate(event.target.value);
   };
-  
 
   const handleTimeChange = (event) => {
     setSelectedTime(event.target.value);
@@ -94,10 +92,18 @@ const Vehicle = ({ vehicle, onQuantityChange }) => {
     }
   };
 
-
   return (
     <div className="vehicle">
-      <div className="img"></div>
+      <div
+        className="img"
+        style={{
+          width: "100%",
+          background: `url(${vehicle.vehicleImageURL})`,
+          height: "20vh",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
+      />
       <div className="text">
         <div className="top">
           <div className="left">

@@ -5,7 +5,6 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 
-
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [vendors, setVendors] = useState([]);
@@ -64,7 +63,17 @@ const Home = () => {
         style={{ color: "inherit", textDecoration: "inherit" }}
       >
         <div className="vendor">
-          <div className="img" />
+          <div
+            className="img"
+            style={{
+              width: "100%",
+              height: "200px",
+              backgroundImage: `url(${vendor.vendorImageURL})`, // Interpolation used here
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+            }}
+          />
+
           <div className="info">
             <div className="left">
               <h3>{vendor.name}</h3>
